@@ -18,7 +18,6 @@ import (
 	kafka "github.com/segmentio/kafka-go"
 	"github.com/sfreiberg/gotwilio"
 	"github.com/spf13/viper"
-	"gopkg.in/gomail.v2"
 )
 
 func getEnvVars() {
@@ -79,8 +78,8 @@ func smsWale() {
 		value := m.Value
 		var raw map[string]interface{}
 		json.Unmarshal(value, &raw)
-		// sendMe := raw["phone"]
-		sendMe := raw["email"]
+		sendMe := raw["phone"]
+		// sendMe := raw["email"]
 		whatMessage := raw["message_body"]
 		f := colorjson.NewFormatter()
 		f.Indent = 4
@@ -95,7 +94,7 @@ func smsWale() {
 		fmt.Println(string(s))
 		fmt.Println("_______________________________________________________")
 		if sendMe != nil {
-			go sendMail(sendMe.(string), whatMessage.(string))
+			go sendSms(sendMe.(string), whatMessage.(string))
 		} else {
 			fmt.Println("Empty")
 		}
@@ -113,24 +112,6 @@ func sendSms(sendMe string, whatMessage string) {
 	_, _, err := twilio.SendSMS(from, to, message, "", "")
 	if err != nil {
 		logger.SugarLogger.Error("Can't send Message. Error occured:", err)
-	}
-	wg.Done()
-}
-
-func sendMail(semdMe string, whatMessage string) {
-	// temp := "<head><link href=\"//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\"><script src=\"//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script><script src=\"//code.jquery.com/jquery-1.11.1.min.js\"></script></head>  <div class=\"alert alert-success\"  style=\"text-align:center\">    <span class=\"glyphicon glyphicon-ok\"></span> <strong>Congratulations</strong>    <hr class=\"message-inner-separator\">    <p>      Transaction Successful.</p>  </div>"
-	m := gomail.NewMessage()
-	m.SetHeader("From", viper.GetString("emailFrom"))
-	m.SetHeader("To", semdMe)
-	// m.SetAddressHeader("Cc", "dan@example.com", "Dan")
-	m.SetHeader("Subject", "Transaction Status")
-	m.SetBody("text/html", whatMessage)
-	// m.Attach("/home/Alex/kiaraAdvani.jpg")
-	d := gomail.NewDialer(viper.GetString("emailServerAddr"), viper.GetInt("emailServerPort"), viper.GetString("emailFrom"), os.Getenv("EMAIL_PASS"))
-	// Send the email to Bob, Cora and Dan.
-	if err := d.DialAndSend(m); err != nil {
-		// panic(err)
-		logger.SugarLogger.Error("Can't send Email. Error occured")
 	}
 	wg.Done()
 }
