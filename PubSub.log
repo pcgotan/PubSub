@@ -1,0 +1,15 @@
+{"level":"DEBUG","ts":"2020-05-14T13:59:42.655+0530","caller":"producer/main.go:89","msg":"path: /api/v1/produce\t\thandler: main.postDataToKafka\tmethod: POST,   registered routes"}
+{"level":"DEBUG","ts":"2020-05-14T14:17:13.241+0530","caller":"producer/main.go:89","msg":"path: /api/v1/produce\t\thandler: main.postDataToKafka\tmethod: POST,   registered routes"}
+{"level":"INFO","ts":"2020-05-14T14:18:23.025+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:19:03.683+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"DEBUG","ts":"2020-05-14T14:31:48.458+0530","caller":"producer/main.go:85","msg":"path: /api/v1/produce\t\thandler: main.postDataToKafka\tmethod: POST,   registered routes"}
+{"level":"INFO","ts":"2020-05-14T14:32:23.292+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"DEBUG","ts":"2020-05-14T14:53:04.049+0530","caller":"producer/main.go:85","msg":"path: /api/v1/produce\t\thandler: main.postDataToKafka\tmethod: POST,   registered routes"}
+{"level":"INFO","ts":"2020-05-14T14:54:41.922+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:54:47.464+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:56:34.402+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:56:42.110+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:56:58.737+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:57:54.803+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:57:56.928+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
+{"level":"INFO","ts":"2020-05-14T14:58:58.178+0530","caller":"config/config.go:143","msg":"Using LeastBytes balancer"}
