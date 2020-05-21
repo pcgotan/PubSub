@@ -13235,3 +13235,64 @@
 {"level":"ERROR","ts":"2020-05-21T09:54:38.102+0530","caller":"Consumer_mail/main.go:125","msg":"error reading message: dial tcp 192.168.43.148:29092: connect: network is unreachable"}
 {"level":"ERROR","ts":"2020-05-21T09:54:38.106+0530","caller":"Consumer_mail/main.go:125","msg":"error reading message: dial tcp 192.168.43.148:19092: connect: network is unreachable"}
 {"level":"ERROR","ts":"2020-05-21T09:54:38.123+0530","caller":"Consumer_mail/main.go:125","msg":"error reading message: dial tcp 192.168.43.148:39092: connect: network is unreachable"}
+{"level":"INFO","ts":"2020-05-21T14:58:46.026+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T14:58:55.675+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T14:59:08.778+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T14:59:11.017+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:00:00.320+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:23:06.412+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:23:44.804+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:04.438+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:20.777+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:33.822+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:33.823+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:25:46.808+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:46.871+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:25:52.033+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:59.175+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:25:59.178+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:26:07.112+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:26:07.113+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:28:19.985+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:28:19.987+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:28:28.810+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:28:28.812+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:28:55.284+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:28:55.299+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:29:52.782+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:29:58.594+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:30:27.254+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:30:27.259+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:31:02.659+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:31:02.660+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:31:07.885+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:31:07.886+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:31:45.004+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:33:13.965+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:33:59.878+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:37:12.099+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:37:12.102+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:37:27.356+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:37:27.358+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:37:39.124+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:40:32.293+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:40:43.725+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:41:04.829+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:41:32.133+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:42:31.532+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:42:31.605+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:42:37.633+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:42:45.429+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:42:45.432+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:42:59.209+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:42:59.232+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:43:03.751+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:43:08.873+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:43:08.875+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:43:11.236+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:43:11.336+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:49:19.947+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:49:19.948+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"INFO","ts":"2020-05-21T15:49:39.724+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-21T15:49:39.725+0530","caller":"config/config.go:110","msg":"Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)"}
+{"level":"DEBUG","ts":"2020-05-21T15:51:15.773+0530","caller":"producer/main.go:74","msg":"path: /api/v1/produce\thandler: main.postDataToKafka\tmethod: POST,\tregistered routes"}

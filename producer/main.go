@@ -101,7 +101,7 @@ func postDataToKafka(c *gin.Context) {
 	newTopicConfig := kafka.TopicConfig{Topic: kafkaTopic, NumPartitions: 10, ReplicationFactor: 3}
 	err = dialForTopicCreation.CreateTopics(newTopicConfig)
 	if err != nil {
-		logger.SugarLogger.Error("Error white creating topic, dial to the leader", err)
+		logger.SugarLogger.Error("Error while creating topic, dial to the leader", err)
 	}
 
 	kafkaProducer, _ = config.Configure(strings.Split(kafkaBrokerURL, ","), kafkaClientID, kafkaTopic, formInBytes)
