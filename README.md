@@ -121,6 +121,22 @@ Update your /etc/host file
 ::1     ip6-localhost ip6-loopback
 ```
 
+### Additional file creation
+Create a file credentials.env in the cloned repo   
+Contents of this file(write yours, without "")
+```
+EMAIL_PASS = your_Email_Password
+smsAccountSid = your_sms_Account_Sid
+smsAuthToken = your_sms_Auth_Token
+smsFrom = your_mobile_number_(+countryCode + mobileNumbe)
+```
+
+
+
+
+
+
+
 Install kafkacat for testing
 
 ```
@@ -183,6 +199,4 @@ docker run \
   --rm \
   confluentinc/cp-kafka:5.5.0 \
   kafka-topics --delete --topic bar --zookeeper localhost:32181
-
-
 ```
