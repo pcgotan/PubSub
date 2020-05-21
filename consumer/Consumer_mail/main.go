@@ -56,50 +56,79 @@ func mailWale() {
 	kafkaClientID := "Email_Group"
 	allBrokers := viper.GetString("brokers")
 	brokers := strings.Split(allBrokers, ",")
-	config := kafka.ReaderConfig{
+	group, err := kafka.NewConsumerGroup(kafka.ConsumerGroupConfig{
+		ID:      kafkaClientID,
 		Brokers: brokers,
-		Topic:   topic,
-		// Partition:       partition,
-		GroupID:         kafkaClientID,
-		MinBytes:        viper.GetInt("readerMinBytes"),
-		MaxBytes:        viper.GetInt("readerMaxBytes"),
-		MaxWait:         1 * time.Second,
-		ReadLagInterval: -1,
-	}
-	reader := kafka.NewReader(config)
-	defer reader.Close()
-	for {
-		wg.Add(1)
-		m, err := reader.ReadMessage(context.Background())
-		if err != nil {
-			logger.SugarLogger.Error("Error Reading Messages", err)
-			continue
-		}
-		value := m.Value
-		var raw map[string]interface{}
-		json.Unmarshal(value, &raw)
-		sendMe := raw["email"]
-		whatMessage := raw["message_body"]
-		f := colorjson.NewFormatter()
-		f.Indent = 4
-		s, _ := f.Marshal(raw)
-		green := color.New(color.FgGreen).SprintFunc()
-		fmt.Println(color.YellowString("\nMessage Consumed"))
-		fmt.Println(color.WhiteString("Consumer_Group:"), green(kafkaClientID))
-		fmt.Println(color.WhiteString("Topic:"), green(m.Topic))
-		fmt.Println(color.WhiteString("Partition:"), green(m.Partition))
-		fmt.Println(color.WhiteString("Offset:"), green(m.Offset))
-		fmt.Println(string(s))
-		fmt.Println("_______________________________________________________")
+		Topics:  []string{topic},
+	})
+	if err != nil {
+		logger.SugarLogger.Error("error creating consumer group:", err)
 
-		// fmt.Printf(color.WhiteString(Consumer_Group:) %v \ncolor.WhiteString(Topic:) %v \ncolor.WhiteString(Partition:) %v \ncolor.WhiteString(Offset:) %v \n%s\n\n", green(kafkaClientID), green(m.Topic), green(m.Partition), green(m.Offset), string(s))
-		if sendMe != nil {
-			go sendMail(sendMe.(string), whatMessage.(string))
-		} else {
-			fmt.Println("Empty")
+		os.Exit(1)
+	}
+	defer group.Close()
+	for {
+		gen, err := group.Next(context.TODO())
+		if err != nil {
+			break
+		}
+		assignments := gen.Assignments[topic]
+		for _, assignment := range assignments {
+			partition, offset := assignment.ID, assignment.Offset
+			gen.Start(func(ctx context.Context) {
+				reader := kafka.NewReader(kafka.ReaderConfig{
+					Brokers:         brokers,
+					Topic:           topic,
+					Partition:       partition,
+					MinBytes:        viper.GetInt("readerMinBytes"),
+					MaxBytes:        viper.GetInt("readerMaxBytes"),
+					MaxWait:         1 * time.Second,
+					ReadLagInterval: -1,
+				})
+				defer reader.Close()
+				//last committed offset for this partition + 1 (start consuming from this offset).
+				reader.SetOffset(offset + 1)
+				wg.Add(1)
+				for {
+					wg.Add(1)
+					m, err := reader.ReadMessage(ctx)
+					switch err {
+					case kafka.ErrGenerationEnded:
+						gen.CommitOffsets(map[string]map[int]int64{topic: {partition: offset}})
+						return
+					case nil:
+						value := m.Value
+						var raw map[string]interface{}
+						json.Unmarshal(value, &raw)
+						sendMe := raw["email"]
+						// sendMe := raw["phone"]
+						whatMessage := raw["message_body"]
+						f := colorjson.NewFormatter()
+						f.Indent = 4
+						s, _ := f.Marshal(raw)
+						green := color.New(color.FgGreen).SprintFunc()
+						fmt.Println(color.YellowString("\nMessage Consumed"))
+						fmt.Println(color.WhiteString("Consumer_Group:"), green(kafkaClientID))
+						fmt.Println(color.WhiteString("Topic:"), green(m.Topic))
+						fmt.Println(color.WhiteString("Partition:"), green(m.Partition))
+						fmt.Println(color.WhiteString("Offset:"), green(m.Offset))
+						fmt.Println(string(s))
+						fmt.Println("_______________________________________________________")
+						if sendMe != nil {
+							go sendMail(sendMe.(string), whatMessage.(string)) // sendSms and also uncomment sendMe
+						} else {
+							logger.SugarLogger.Error("Phone number is empty")
+						}
+						offset = m.Offset
+						gen.CommitOffsets(map[string]map[int]int64{topic: {partition: offset}})
+					default:
+						logger.SugarLogger.Error("error reading message: ", err)
+					}
+				}
+				wg.Wait()
+			})
 		}
 	}
-	wg.Wait()
 }
 
 func sendMail(semdMe string, whatMessage string) {

@@ -72,6 +72,7 @@ func fetchConfiguration(url string) ([]byte, error) {
 			}
 		}
 	}
+
 	return bodyBytes, err
 }
 

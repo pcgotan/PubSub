@@ -8,9 +8,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"os/signal"
+	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,13 +18,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-// var logger = log.With().Str("pkg", "main").Logger()
 var (
 	listenAddrAPI  string
 	kafkaBrokerURL string
 	kafkaVerbose   bool
 	kafkaClientID  string
 	kafkaTopic     string
+	postAddr       string
 )
 
 type wholeData struct {
@@ -59,34 +58,25 @@ func main() {
 	flag.Parse()
 	fmt.Println("Producer is running, Happy Posting!....")
 	listenAddrAPI = viper.GetString("server")
-	kafkaBrokerURL = viper.GetString("brokers")
-	kafkaClientID = viper.GetString("clientID")
-	kafkaVerbose = viper.GetBool("verbose")
-	kafkaTopic = viper.GetString("topic")
+	postAddr = viper.GetString("postAddr")
 
-	err := server(listenAddrAPI)
+	err := server(listenAddrAPI, postAddr)
 	if err != nil {
 		logger.SugarLogger.Error("Could not stablish a server, exiting...")
 	}
 
-	var signalChan = make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt, syscall.SIGTERM)
-	select {
-	case <-signalChan:
-		logger.SugarLogger.Error("got an interrupt, exiting...")
-	}
 }
-
-func server(listenAddr string) error {
+func server(listenAddr, postAddr string) error {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.POST(viper.GetString("postAddr"), postDataToKafka)
+	router.POST(postAddr, postDataToKafka)
 	for _, routeInfo := range router.Routes() {
-		logger.SugarLogger.Debug("path: ", routeInfo.Path, "		handler: ", routeInfo.Handler, "	method: ", routeInfo.Method, ",   registered routes")
+		logger.SugarLogger.Debug("path: ", routeInfo.Path, "\thandler: ", routeInfo.Handler, "\tmethod: ", routeInfo.Method, ",\tregistered routes")
 
 	}
 	return router.Run(listenAddr)
 }
+
 func postDataToKafka(c *gin.Context) {
 	c.Bind(&someData)
 	c.JSON(http.StatusOK, &someData)
@@ -94,6 +84,26 @@ func postDataToKafka(c *gin.Context) {
 	if err != nil {
 		logger.SugarLogger.Error("Error occured white marshalling data", err)
 	}
+
+	kafkaBrokerURL = viper.GetString("brokers")
+	kafkaClientID = viper.GetString("clientID")
+	kafkaVerbose = viper.GetBool("verbose")
+	kafkaTopic = viper.GetString("topic")
+	if (someData.Topic_name) != "" {
+		viper.Set("topic", (someData.Topic_name))
+		kafkaTopic = viper.GetString("topic")
+	}
+
+	dialForTopicCreation, _ := kafka.Dial("tcp", strings.Split(kafkaBrokerURL, ",")[0])
+	leaderBroker, _ := dialForTopicCreation.Controller()
+	leaderAddr := "localhost:" + strconv.Itoa(leaderBroker.Port)
+	dialForTopicCreation, _ = kafka.Dial("tcp", leaderAddr)
+	newTopicConfig := kafka.TopicConfig{Topic: kafkaTopic, NumPartitions: 10, ReplicationFactor: 3}
+	err = dialForTopicCreation.CreateTopics(newTopicConfig)
+	if err != nil {
+		logger.SugarLogger.Error("Error white creating topic, dial to the leader", err)
+	}
+
 	kafkaProducer, _ = config.Configure(strings.Split(kafkaBrokerURL, ","), kafkaClientID, kafkaTopic, formInBytes)
 	defer kafkaProducer.Close()
 	parent := context.Background()
@@ -102,6 +112,8 @@ func postDataToKafka(c *gin.Context) {
 	if err != nil {
 		logger.SugarLogger.Error("error while pushing message into kafka: %s", err.Error())
 	}
+	// fmt.Println(viper.GetInt("temppp"))
+	// viper.Set("temppp", viper.GetInt("temppp")+1)
 }
 
 func push(parent context.Context, key string, value []byte) (err error) {
@@ -111,4 +123,5 @@ func push(parent context.Context, key string, value []byte) (err error) {
 		Time:  time.Now(),
 	}
 	return kafkaProducer.WriteMessages(parent, message)
+
 }
