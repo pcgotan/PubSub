@@ -3,4 +3,5 @@
 # environment file
 *.env
 
-
+#log file
+PubSub.log
