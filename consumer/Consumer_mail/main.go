@@ -73,7 +73,7 @@ func mailWale() {
 					defer reader.Close()
 					//last committed offset for this partition + 1 (start consuming from this offset).
 					reader.SetOffset(offset + 1)
-					wg.Add(1)
+					tempp := offset // this variavle will track the max committed offset
 					for {
 						wg.Add(1)
 						m, err := reader.ReadMessage(ctx)
@@ -100,12 +100,22 @@ func mailWale() {
 							fmt.Println(string(s))
 							fmt.Println("_______________________________________________________")
 							if sendMe != nil {
-								go sendMail(sendMe.(string), whatMessage.(string)) // sendSms and also uncomment sendMe
+								go func() {
+									err := sendMail(sendMe.(string), whatMessage.(string))
+									if err == nil {
+										offset = m.Offset
+										if offset > tempp {
+											tempp = offset
+											gen.CommitOffsets(map[string]map[int]int64{topic: {partition: offset}})
+											// fmt.Println("----------------------------------Committed offset till--------------   ", offset)
+
+										}
+									}
+									wg.Done()
+								}()
 							} else {
-								logger.SugarLogger.Error("Phone number is empty")
+								logger.SugarLogger.Error("Email Address is empty")
 							}
-							offset = m.Offset
-							gen.CommitOffsets(map[string]map[int]int64{topic: {partition: offset}})
 						default:
 							logger.SugarLogger.Error("error reading message: ", err)
 						}
@@ -120,7 +130,7 @@ func mailWale() {
 
 }
 
-func sendMail(semdMe string, whatMessage string) {
+func sendMail(semdMe string, whatMessage string) error {
 	// temp := "<head><link href=\"//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\"><script src=\"//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script><script src=\"//code.jquery.com/jquery-1.11.1.min.js\"></script></head>  <div class=\"alert alert-success\"  style=\"text-align:center\">    <span class=\"glyphicon glyphicon-ok\"></span> <strong>Congratulations</strong>    <hr class=\"message-inner-separator\">    <p>      Transaction Successful.</p>  </div>"
 	m := gomail.NewMessage()
 	m.SetHeader("From", viper.GetString("emailFrom"))
@@ -133,9 +143,12 @@ func sendMail(semdMe string, whatMessage string) {
 	// Send the email to Bob, Cora and Dan.
 	if err := d.DialAndSend(m); err != nil {
 		// panic(err)
-		logger.SugarLogger.Error("Can't send Email. Error occured")
+		logger.SugarLogger.Error("Can't send Email. Error occured", err)
+		return err
+
 	}
-	wg.Done()
+	return nil
+
 }
 
 func getEnvVars() {
