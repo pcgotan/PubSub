@@ -1,4 +1,4 @@
-package producer
+package packageproducer
 
 import (
 	"context"
@@ -8,7 +8,6 @@ import (
 )
 
 //Push asdf
-
 func Push(parent context.Context, key string, value []byte) (err error) {
 	message := kafka.Message{
 		Key:   []byte(key),

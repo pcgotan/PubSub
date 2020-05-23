@@ -1,19 +1,18 @@
-package consumerSms
+package packageconsumer
 
 import (
 	"PubSub/config/getEnvVars"
 	"PubSub/config/initConfig"
-	"PubSub/sender"
-
-	"sync"
+	// "PubSub/sender"
 )
 
-var wg = sync.WaitGroup{}
+// var wg = sync.WaitGroup{}
 
+// StartConsumerSms asdf
 func StartConsumerSms() {
 	getEnvVars.GetEnvVars()
 	initConfig.InitConfig()
 	wg.Add(2)
-	go sender.Sender("SMS_Group")
+	go Sender("SMS_Group")
 	wg.Wait()
 }

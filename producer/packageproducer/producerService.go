@@ -1,29 +1,17 @@
-package producer
+package packageproducer
 
 import (
-	"PubSub/config"
 	"PubSub/logger"
 	"context"
-	"encoding/json"
-	"fmt"
-	"net/http"
 	"strconv"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	kafka "github.com/segmentio/kafka-go"
 	"github.com/spf13/viper"
 )
 
 // PostDataToKafka temp
-func PostDataToKafka(c *gin.Context) {
-	c.Bind(&someData)
-	c.JSON(http.StatusOK, &someData)
-	formInBytes, err := json.Marshal(&someData)
-	fmt.Printf("%T", formInBytes)
-	if err != nil {
-		logger.SugarLogger.Error("Error occured white marshalling data", err)
-	}
+func PostDataToKafka(formInBytes []byte) {
 
 	kafkaBrokerURL = viper.GetString("brokers")
 	kafkaClientID = viper.GetString("clientID")
@@ -40,12 +28,34 @@ func PostDataToKafka(c *gin.Context) {
 	// leaderAddr := strings.Split(kafkaBrokerURL, ":")[0] + ":" + strconv.Itoa(leaderBroker.Port)
 	dialForTopicCreation, _ = kafka.Dial("tcp", leaderAddr)
 	newTopicConfig := kafka.TopicConfig{Topic: kafkaTopic, NumPartitions: 10, ReplicationFactor: 3}
-	err = dialForTopicCreation.CreateTopics(newTopicConfig)
+	err := dialForTopicCreation.CreateTopics(newTopicConfig)
 	if err != nil {
 		logger.SugarLogger.Error("Error while creating topic, dial to the leader", err)
 	}
 
-	kafkaProducer, _ = config.Configure(strings.Split(kafkaBrokerURL, ","), kafkaClientID, kafkaTopic, formInBytes)
+	var balancer1 kafka.Balancer
+
+	if someData.Key == "" && someData.Request_Id != "" {
+
+		balancer1 = kafka.BalancerFunc(func(msg kafka.Message, partitions ...int) int {
+			i, _ := strconv.ParseInt(someData.Request_Id, 10, 32)
+			if int(i) >= len(partitions) {
+				logger.SugarLogger.Info("Specified partition is greater than total number of partition, Writing it to (specified partition) mod (total partition)")
+			}
+			return int(int(i) % (len(partitions)))
+		})
+	}
+
+	if someData.Key != "" {
+		balancer1 = &kafka.Hash{}
+
+	}
+
+	if someData.Key == "" && someData.Request_Id == "" {
+		balancer1 = &kafka.LeastBytes{}
+	}
+
+	kafkaProducer, _ = Configure(strings.Split(kafkaBrokerURL, ","), kafkaClientID, kafkaTopic, formInBytes, balancer1)
 	defer kafkaProducer.Close()
 	parent := context.Background()
 	defer parent.Done()

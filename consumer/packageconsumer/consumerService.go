@@ -1,8 +1,7 @@
-package sender
+package packageconsumer
 
 import (
-	"PubSub/client/sendMail"
-	"PubSub/client/sendSms"
+	"PubSub/client"
 	"PubSub/logger"
 	"context"
 	"encoding/json"
@@ -20,6 +19,7 @@ import (
 
 var wg = sync.WaitGroup{}
 
+//Sender sdf
 func Sender(clientID string) {
 	var topics = []string{"topic1", "topic2", "topic3"}
 	kafkaClientID := clientID
@@ -97,10 +97,10 @@ func Sender(clientID string) {
 								go func() {
 									var err error
 									if clientID == "Email_Group" {
-										err = sendMail.SendMail(sendMe.(string), whatMessage.(string))
+										err = client.SendMail(sendMe.(string), whatMessage.(string))
 									}
 									if clientID == "SMS_Group" {
-										err = sendSms.SendMail(sendMe.(string), whatMessage.(string))
+										err = client.SendMail(sendMe.(string), whatMessage.(string))
 									}
 									if err == nil {
 										offset = m.Offset

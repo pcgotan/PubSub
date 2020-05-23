@@ -1,4 +1,4 @@
-package server
+package routes
 
 import (
 	"PubSub/logger"
@@ -6,9 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Server temp
-func Server(listenAddr, postAddr string, postData gin.HandlerFunc) *gin.Engine {
-
+// Route temp
+func Route(listenAddr, postAddr string, postData gin.HandlerFunc) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.POST(postAddr, postData)

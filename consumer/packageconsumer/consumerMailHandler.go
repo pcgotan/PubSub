@@ -1,18 +1,18 @@
-package consumerMail
+package packageconsumer
 
 import (
 	"PubSub/config/getEnvVars"
 	"PubSub/config/initConfig"
-	"PubSub/sender"
-	"sync"
+	// "PubSub/sender"
 )
 
-var wg = sync.WaitGroup{}
+// var wg = sync.WaitGroup{}
 
+//StartConsumerMail sadf
 func StartConsumerMail() {
 	getEnvVars.GetEnvVars()
 	initConfig.InitConfig()
 	wg.Add(2)
-	go sender.Sender("Email_Group")
+	go Sender("Email_Group")
 	wg.Wait()
 }

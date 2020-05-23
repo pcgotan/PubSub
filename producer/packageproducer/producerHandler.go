@@ -1,14 +1,12 @@
-package producer
+package packageproducer
 
 import (
-	"PubSub/config/initConfig"
 	"PubSub/logger"
+	"encoding/json"
+	"net/http"
 
-	"PubSub/server"
-	"fmt"
-
-	kafka "github.com/segmentio/kafka-go"
-	"github.com/spf13/viper"
+	"github.com/gin-gonic/gin"
+	"github.com/segmentio/kafka-go"
 )
 
 var (
@@ -34,17 +32,14 @@ type wholeData struct {
 var someData wholeData
 var kafkaProducer *kafka.Writer
 
-//StartProducer asdf
-func StartProducer() {
-	initConfig.InitConfig()
-
-	fmt.Println("Producer is running, Happy Posting!....")
-	listenAddrAPI = viper.GetString("server")
-	postAddr = viper.GetString("postAddr")
-	router := server.Server(listenAddrAPI, postAddr, PostDataToKafka)
-	err := router.Run(listenAddrAPI)
-
+// PostDataToKafka temp
+func ReceiveData(c *gin.Context) {
+	c.Bind(&someData)
+	c.JSON(http.StatusOK, &someData)
+	formInBytes, err := json.Marshal(&someData)
 	if err != nil {
-		logger.SugarLogger.Error("Could not stablish a server, exiting...")
+		logger.SugarLogger.Error("Error occured white marshalling data", err)
 	}
+
+	PostDataToKafka(formInBytes)
 }
