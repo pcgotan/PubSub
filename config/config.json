@@ -21,7 +21,7 @@
                 "log.file.name": "PubSub.log",
                 "log.file.maxsize": 10,
                 "log.file.maxbackup": 5,
-                "log.file.maxage": 30,
+                "log.file.maxage": 10,
                 "emailFrom": "dsfadsfasdfkjhkhhjk@gmail.com",
                 "emailServerAddr": "smtp.gmail.com",
                 "emailServerPort": 587

@@ -8,4 +8,17 @@
 {"level":"ERROR","ts":"2020-05-21T21:34:43.784+0530","caller":"consumer_sms/main.go:130","msg":"error reading message: dial tcp 192.168.43.148:19092: connect: network is unreachable"}
 {"level":"ERROR","ts":"2020-05-21T21:34:44.242+0530","caller":"consumer_sms/main.go:130","msg":"error reading message: dial tcp 192.168.43.148:39092: connect: network is unreachable"}
 {"level":"ERROR","ts":"2020-05-21T21:34:44.340+0530","caller":"Consumer_mail/main.go:110","msg":"error reading message: dial tcp 192.168.43.148:19092: connect: network is unreachable"}
-{"level":"ERROR","ts":"2020-05-21T21:34:44.628+0530","caller":"consumer_sms/main.go:130","msg":"error reading message: dial tcp 192.168.43.148:29092: connect: network is unreachable"}
+{"level":"ERROR","ts":"2020-05-21T21:34:44.628+0530","caller":"consumer_sms/main.go:130","msg":"error reading message: dial tcp 192.168.43.148:29092: connect: network is unreachable"}{"level":"INFO","ts":"2020-05-22T15:44:36.844+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:44:46.415+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:46:06.383+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:46:57.617+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:47:00.365+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:47:02.166+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:47:04.429+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"INFO","ts":"2020-05-22T15:47:06.279+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
+{"level":"ERROR","ts":"2020-05-22T15:47:30.253+0530","caller":"Consumer_mail/main.go:146","msg":"Can't send Email. Error occureddial tcp 74.125.24.109:500: i/o timeout"}
+{"level":"ERROR","ts":"2020-05-22T15:47:30.253+0530","caller":"Consumer_mail/main.go:146","msg":"Can't send Email. Error occureddial tcp 74.125.24.109:500: i/o timeout"}
+{"level":"ERROR","ts":"2020-05-22T15:47:30.254+0530","caller":"Consumer_mail/main.go:146","msg":"Can't send Email. Error occureddial tcp 74.125.24.109:500: i/o timeout"}
+{"level":"ERROR","ts":"2020-05-22T15:47:30.254+0530","caller":"Consumer_mail/main.go:146","msg":"Can't send Email. Error occureddial tcp 74.125.24.109:500: i/o timeout"}
+{"level":"ERROR","ts":"2020-05-22T15:47:30.254+0530","caller":"Consumer_mail/main.go:146","msg":"Can't send Email. Error occureddial tcp 74.125.24.109:500: i/o timeout"}
+{"level":"INFO","ts":"2020-05-22T15:49:22.521+0530","caller":"config/config.go:136","msg":"Using partition specific balancer"}
