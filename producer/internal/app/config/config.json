@@ -1,0 +1,32 @@
+{
+    "name": "test",
+    "profiles": ["dev"],
+    "label": "master",
+    "version": "",
+    "state": null,
+    "propertySources": [
+        {
+            "source": {
+                "Environment": "test",
+                "server": "0.0.0.0:8080",
+                "topic": "bar",
+                "brokers": "localhost:19092,localhost:29092,localhost:39092",
+                "topics": "topic1,topic2,topic3",
+                "clientID": "my-kafka-client",
+                "verbose": true,
+                "postAddr": "/api/v1/produce",
+                "readerMinBytes": 10e3,
+                "readerMaxBytes": 10e6,
+                "readerMaxWait": 1,
+                "log.file.path": "./logs/",
+                "log.file.name": "producer.log",
+                "log.file.maxsize": 10,
+                "log.file.maxbackup": 5,
+                "log.file.maxage": 10,
+                "emailFrom": "dsfadsfasdfkjhkhhjk@gmail.com",
+                "emailServerAddr": "smtp.gmail.com",
+                "emailServerPort": 587
+            }
+        }
+    ]
+}
