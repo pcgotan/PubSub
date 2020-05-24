@@ -9,7 +9,6 @@ import (
 func main() {
 	if os.Args[1] == "mail" {
 		handler.StartConsumerMail()
-
 	} else if os.Args[1] == "sms" {
 		handler.StartConsumerSms()
 	} else {

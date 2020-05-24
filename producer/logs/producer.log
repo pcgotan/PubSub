@@ -9,3 +9,5 @@
 {"level":"DEBUG","ts":"2020-05-24T12:58:08.625+0530","caller":"routes/route.go:15","msg":"path: /api/v1/produce\thandler: producer/internal/app/handler.ReceiveData\tmethod: POST,\tregistered routes"}
 {"level":"DEBUG","ts":"2020-05-24T13:16:49.949+0530","caller":"routes/route.go:15","msg":"path: /api/v1/produce\thandler: producer/internal/app/handler.ReceiveData\tmethod: POST,\tregistered routes"}
 {"level":"DEBUG","ts":"2020-05-24T13:21:52.661+0530","caller":"routes/route.go:15","msg":"path: /api/v1/produce\thandler: producer/internal/app/handler.ReceiveData\tmethod: POST,\tregistered routes"}
+{"level":"DEBUG","ts":"2020-05-24T14:10:33.645+0530","caller":"routes/route.go:15","msg":"path: /api/v1/produce\thandler: producer/internal/app/handler.ReceiveData\tmethod: POST,\tregistered routes"}
+{"level":"DEBUG","ts":"2020-05-24T14:10:43.341+0530","caller":"routes/route.go:15","msg":"path: /api/v1/produce\thandler: producer/internal/app/handler.ReceiveData\tmethod: POST,\tregistered routes"}
