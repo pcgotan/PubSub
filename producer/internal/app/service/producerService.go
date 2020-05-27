@@ -23,17 +23,7 @@ func PostDataToKafka(formInBytes []byte, someData structs.WholeData) {
 		viper.Set("topic", (someData.Topic_name))
 		kafkaTopic = viper.GetString("topic")
 	}
-
-	dialForTopicCreation, _ := gokafka.Dial("tcp", strings.Split(kafkaBrokerURL, ",")[0])
-	leaderBroker, _ := dialForTopicCreation.Controller()
-	leaderAddr := "localhost:" + strconv.Itoa(leaderBroker.Port)
-	// leaderAddr := strings.Split(kafkaBrokerURL, ":")[0] + ":" + strconv.Itoa(leaderBroker.Port)
-	dialForTopicCreation, _ = gokafka.Dial("tcp", leaderAddr)
-	newTopicConfig := gokafka.TopicConfig{Topic: kafkaTopic, NumPartitions: 10, ReplicationFactor: 3}
-	err := dialForTopicCreation.CreateTopics(newTopicConfig)
-	if err != nil {
-		logger.SugarLogger.Error("Error while creating topic, dial to the leader", err)
-	}
+	CreateTopic(kafkaBrokerURL, kafkaTopic)
 
 	var balancer1 gokafka.Balancer
 
@@ -60,8 +50,23 @@ func PostDataToKafka(formInBytes []byte, someData structs.WholeData) {
 	defer kafkaProducer.Close()
 	parent := context.Background()
 	defer parent.Done()
-	err = kafka.Push(parent, someData.Key, formInBytes)
+	err := kafka.Push(parent, someData.Key, formInBytes)
 	if err != nil {
 		logger.SugarLogger.Error("error while pushing message into kafka: %s", err.Error())
 	}
+}
+
+// CreateTopic function
+func CreateTopic(kafkaBrokerURL, kafkaTopic string) {
+	dialForTopicCreation, _ := gokafka.Dial("tcp", strings.Split(kafkaBrokerURL, ",")[0])
+	leaderBroker, _ := dialForTopicCreation.Controller()
+	leaderAddr := "localhost:" + strconv.Itoa(leaderBroker.Port)
+	// leaderAddr := strings.Split(kafkaBrokerURL, ":")[0] + ":" + strconv.Itoa(leaderBroker.Port)
+	dialForTopicCreation, _ = gokafka.Dial("tcp", leaderAddr)
+	newTopicConfig := gokafka.TopicConfig{Topic: kafkaTopic, NumPartitions: 10, ReplicationFactor: 3}
+	err := dialForTopicCreation.CreateTopics(newTopicConfig)
+	if err != nil {
+		logger.SugarLogger.Error("Error while creating topic, dial to the leader", err)
+	}
+
 }

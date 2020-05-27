@@ -15,10 +15,11 @@ func SendSms(sendMe string, whatMessage string) error {
 	from := os.Getenv("smsFrom")
 	to := sendMe
 	message := whatMessage
-	_, _, err := twilio.SendSMS(from, to, message, "", "")
-	if err != nil {
-		logger.SugarLogger.Error("Can't send Message. Error occured:", err)
-		return err
+	_, exception, _ := twilio.SendSMS(from, to, message, "", "")
+
+	if exception != nil {
+		logger.SugarLogger.Error("Can't send Message. Auth failed")
+		return exception
 	}
 	return nil
 }
